@@ -1,0 +1,28 @@
+name = "txt-tools"
+main = "src/workers/index.ts"
+compatibility_date = "2023-01-01"
+
+[env.production]
+workers_dev = true
+route = "txt-tools.pages.dev/*"
+
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "txt-tools" 
+
+[routes]
+pattern = "txt-tools.pages.dev/api/*"
+zone_name = "txt-tools.pages.dev"
+
+# 如果需要更细粒度的控制
+[[routes]]
+pattern = "txt-tools.pages.dev/api/split/*"
+script = "split-worker"
+
+[[routes]]
+pattern = "txt-tools.pages.dev/api/merge/*"
+script = "merge-worker"
+
+[[routes]]
+pattern = "txt-tools.pages.dev/api/dedup/*"
+script = "dedup-worker" 
